@@ -10,10 +10,14 @@ public class Evaluation {
         char[] tokens = expression.toCharArray();
 
         for (int i = 0; i < tokens.length; i++) {
-            if (tokens[i] >= '0' && tokens[i] <= '9') {
+            if ((tokens[i] >= '0' && tokens[i] <= '9') || tokens[i]=='.') {
                 StringBuilder sNum = new StringBuilder();
-                while (i < tokens.length && tokens[i] >= '0' && tokens[i] <= '9') {
+                while (i < tokens.length && ((tokens[i] >= '0' && tokens[i] <= '9') || tokens[i]=='.')) {
                     sNum.append(tokens[i++]);
+                    // if more than 1 dot in a number
+                    if (isMoreDot(sNum)) {
+                        throw new UnsupportedOperationException("Input expression has some errors");
+                    }
                 }
                 i--;
                 values.push(Double.parseDouble(sNum.toString()));
@@ -45,6 +49,18 @@ public class Evaluation {
         }
 
         return res;
+    }
+
+    private static Boolean isMoreDot(StringBuilder sBuilder) {
+        int countDot = 0;
+
+        for (int i = 0; i < sBuilder.length(); i++) {
+            if (sBuilder.charAt(i) == '.')
+                countDot++;
+        }
+
+        if (countDot > 1) return true;
+        return false;
     }
 
     public static Boolean isHigher(char op1, char op2) {

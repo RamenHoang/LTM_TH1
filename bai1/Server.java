@@ -103,7 +103,14 @@ public class Server {
 
         private String lengthAndVowel(String inStr) {
             String returnStr = "";
-            returnStr += "So tu: " + inStr.length();
+            
+            int countWord = 0;
+            String[] words = inStr.split(" ");
+            for (int i = 0; i < words.length; i++) {
+                if (words[i].length() > 0)
+                    countWord++;
+            }
+            returnStr += "So tu: " + countWord;
 
             int countVowel = 0;
 
